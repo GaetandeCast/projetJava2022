@@ -15,7 +15,7 @@ public class BienConso extends ConsoCarbone{
     }
 
     public static void carboneMoyen(){
-        System.out.println("Un français émet en moyenne 763 kg/an de CO2 équivalent en habillement, 1180 kg/an en achat et usages internet et technologies,et 682 kg/an en autres biens et servives");
+        System.out.println("Un français émet en moyenne 763 kg/an de CO2 équivalent en habillement, 1180 kg/an en achat et usages internet et technologies,et 682 kg/an en autres biens et services");
     }
 
     public void setMontant(double montant){

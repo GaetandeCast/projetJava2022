@@ -18,7 +18,7 @@ public class Alimentation extends ConsoCarbone{
     }
 
     public static void carboneMoyen() {
-        System.out.println("Un français émet en moyenne 1696 kg/an de CO2 équivalent en énergie et utilités, 675 kg/an en construction et gros entretiens, 335 kg/an en équipement des logements");
+        System.out.println("Un français émet en moyenne 263 kg/an de CO2 équivalent en consommant des boissons, 408 kg/an en produits laitiers et oeufs, 1144 kg/an en viandes et poissons et 538 kg/an en consommations diverses");        
     }
 
     public void setTxBoeuf(double txBoeuf) {

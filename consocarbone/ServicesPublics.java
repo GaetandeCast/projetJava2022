@@ -2,11 +2,10 @@ package consocarbone;
 //design pattern: Singleton
 public class ServicesPublics extends ConsoCarbone {
     private static ServicesPublics instance = null;
-    private static double impact;
 
     private ServicesPublics(double i){
         super();
-        impact = i;
+        setImpact(i);
     }
 
     public static ServicesPublics getInstance(){
@@ -16,6 +15,10 @@ public class ServicesPublics extends ConsoCarbone {
 
     @Override
     public String toString(){
-        return "[ID = " + super.getID() + " ] " + "L'impact carbone des services publics est de " + impact + " TCO2eq.";
+        return "[ID = " + super.getID() + " ] " + "L'impact carbone des services publics est de " + getImpact() + " TCO2eq.";
+    }
+    
+    public static void carboneMoyen() {
+        System.out.println("L'empreinte carbone des services publics français se repercute en un impact de 1.5 TCO2eq par français.");        
     }
 }

@@ -18,7 +18,7 @@ public class Logement extends ConsoCarbone{
     }
 
     public static void carboneMoyen() {
-        System.out.println("Un français émet en moyenne 263 kg/an de CO2 équivalent en consommant des boissons, 408 kg/an en produits laitiers et oeufs, 1144 kg/an en viandes et poissons et 538 kg/an en conssommations diverses");
+        System.out.println("Un français émet en moyenne 1696 kg/an de CO2 équivalent en énergie et utilités, 675 kg/an en construction et gros entretiens, 335 kg/an en équipement des logements");
     }
 
     public void setSuperficie(int superficie) {
@@ -46,7 +46,7 @@ public class Logement extends ConsoCarbone{
             case C:
                 return 0.02 * superficie;
             case D:
-                return 0.35 * superficie;
+                return 0.035 * superficie;
             case E:
                 return 0.055 * superficie;
             case F:
