@@ -1,5 +1,4 @@
 package consocarbone;
-import utilisateur.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -39,10 +38,6 @@ public class Main {
         
         t.setTaille(Taille.G);
         System.out.println(t.getTaille());
-
-        Utilisateur u = new Utilisateur(a,b,l,t);
-        u.detaillerEmpreinte();
-        u.recommendations();
     }
 }
         

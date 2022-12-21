@@ -1,6 +1,7 @@
 package utilisateur;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.TreeMap;
 
 import consocarbone.*;
 
@@ -51,7 +52,7 @@ public class Utilisateur {
         double impactVehicules=0;
         for (Transport t : vehicules) impactVehicules+=t.getImpact();
 
-        System.out.println("Votre empreinte carbone annuelle est de " + calculerEmpreinte()+ "tonnes de CO2 equivalent.\n"
+        System.out.println("Votre empreinte carbone annuelle est de " + calculerEmpreinte()+ " tonnes de CO2 equivalent.\n"
         + alimentation.getImpact() + " TCO2eq vien(nen)t de votre alimentation, " 
         + bienConso.getImpact() + " TCO2eq vien(nen)t de vos consommations diverses, " 
         + impactLogements + " TCO2eq vien(nen)t de votre(vos) logement(s), " 
@@ -59,7 +60,7 @@ public class Utilisateur {
         + servicesPublics.getImpact() + " TCO2eq viennent des services publics.");
     }
 
-    public void recommendations(){
+    public void recommendations(TreeMap<Integer,String> nomsVehicules, TreeMap<Integer,String> nomsLogements){
         ArrayList<ConsoCarbone> listeconsos = new ArrayList<ConsoCarbone>();
         listeconsos.add(alimentation);
         listeconsos.add(bienConso);
@@ -75,19 +76,43 @@ public class Utilisateur {
             if(s!="") s+= ", ";
             if (c instanceof Alimentation) s+="l' alimentation";
             else if (c instanceof BienConso) s+="les biens de consommation";
-            else if (c instanceof Logement) s+="le logement";
-            else if (c instanceof Transport) s+="le transport";
+            else if (c instanceof Logement) {
+                Logement l = (Logement) c;
+                if (l.getSuperficie()!=0)s+="le logement "+ nomsLogements.get(l.getID());
+                else s+="le logement";
+            }
+            else if (c instanceof Transport) {
+                Transport t = (Transport) c;
+                if(t.getPossede()) s+="le vehicule " + nomsVehicules.get(t.getID());
+                else s+="les transports";
+            }
             else if (c instanceof ServicesPublics) s+="les services publics";
         }
-        System.out.println("Dans l'odre croissant d'impact, vos poste des cosommation carbone sont : " + s + ".");
+        System.out.println("Dans l'odre croissant d'impact, vos poste des consommation carbone sont : " + s + ".");
 
-        ConsoCarbone consoMaxImpact = listeconsos.get(4);
-        if (consoMaxImpact instanceof ServicesPublics) consoMaxImpact = listeconsos.get(3);
-        System.out.print("Afin d'avoir un mode de vie plus durable, il vous est recommende de reduire votre impact carbone venant de ");
-        if (consoMaxImpact instanceof Alimentation) System.out.println("votre alimentation, par exemple en diminuant la proportion de repas a base de boeuf et en aumentant celle de repas vegetariens.");
+        int longueur = listeconsos.size();
+        ConsoCarbone consoMaxImpact = listeconsos.get(longueur-1);
+
+        boolean maxImpactSP=false;
+        if (consoMaxImpact instanceof ServicesPublics){
+            listeconsos.remove(consoMaxImpact);
+            longueur-=1;
+            consoMaxImpact = listeconsos.get(longueur-1);
+            maxImpactSP=true;
+        }
+        
+        if (maxImpactSP) System.out.println("Vous ne pouvez pas réduire l'impact venant des services publics, il vous donc recommende de reduire votre impact carbone venant de ");
+        else System.out.print("Afin d'avoir un mode de vie plus durable, il vous est recommende de reduire votre impact carbone venant de ");
+        if (consoMaxImpact instanceof Alimentation) System.out.println("votre alimentation, par exemple en diminuant la proportion de repas a base de boeuf et en augmentant celle de repas vegetariens.");
         else if (consoMaxImpact instanceof BienConso) System.out.println("vos depenses en biens de consommation.");
-        else if (consoMaxImpact instanceof Logement) System.out.println("votre logement, par exemple en le faisant isoler afin d'ameliorer sa classe energetique.");
-        else if (consoMaxImpact instanceof Transport) System.out.println("vos moyens de transport, par exemple en utilisant moins votre vehicule ou en en réduisant la taille.");
+        else if (consoMaxImpact instanceof Logement) {
+            Logement l = (Logement) consoMaxImpact;
+            System.out.println("votre logement " + nomsLogements.get(l.getID()) + ", par exemple en le faisant isoler afin d'ameliorer sa classe energetique.");
+        }
+        else if (consoMaxImpact instanceof Transport) {
+            Transport t = (Transport) consoMaxImpact;
+            System.out.print("votre vehicule " + nomsVehicules.get(t.getID()) + ", par exemple en l'utilisant moins ou en vous en separant.");
+        }
     }
     
 }
