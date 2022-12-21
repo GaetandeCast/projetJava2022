@@ -71,64 +71,90 @@ public class Main {
             
             
             ArrayList<Transport> vehicules = new ArrayList<Transport>();
-            System.out.println("Combien de vehicules possedez vous ?");
-            int nbVehicules = Integer.parseInt(reader.readLine());
             TreeMap<Integer,String> nomsVehicules = new TreeMap<Integer,String>();
-            if (nbVehicules == 0){
-                vehicules.add(new Transport());
-            }
-            else if (nbVehicules==1){
-                ajoutVehicule(vehicules, reader, nomsVehicules);
-            }
-            else{
-                int cpt=1;
-                while(cpt<=nbVehicules){
-                    System.out.println("Vehicule n°" + cpt);
+            int nbVehicules = -1;
+            do{    
+                System.out.println("Combien de vehicules possedez vous ?");
+                nbVehicules = Integer.parseInt(reader.readLine());
+                if (nbVehicules == 0){
+                    vehicules.add(new Transport());
+                }
+                else if (nbVehicules==1){
                     ajoutVehicule(vehicules, reader, nomsVehicules);
-                    cpt+=1;
+                }
+                else if (nbVehicules>1){
+                    int cpt=1;
+                    while(cpt<=nbVehicules){
+                        System.out.println("Vehicule n°" + cpt);
+                        ajoutVehicule(vehicules, reader, nomsVehicules);
+                        cpt+=1;
+                    }
+                }
+                else {
+                    System.out.println("Veuillez saisir un entier positif");
                 }
             }
+            while(nbVehicules<0);
 
             
             ArrayList<Logement> logements = new ArrayList<Logement>();
-            System.out.println("Combien de logements possedez vous ?");
-            int nbLogements = Integer.parseInt(reader.readLine());
             TreeMap<Integer,String> nomsLogements = new TreeMap<Integer,String>();
-            if (nbLogements == 0){
-                logements.add(new Logement());
-            }
-            else if (nbLogements==1){
-                ajoutLogement(logements, reader, nomsLogements);
-            }
-            else{
-                int cpt=1;
-                while(cpt<=nbLogements){
-                    System.out.println("Logement n°" + cpt);
+            int nbLogements = -1;
+            do{    
+                System.out.println("Combien de logements possedez vous ?");
+                nbLogements = Integer.parseInt(reader.readLine());
+                if (nbLogements == 0){
+                    logements.add(new Logement());
+                }
+                else if (nbLogements==1){
                     ajoutLogement(logements, reader, nomsLogements);
-                    cpt+=1;
+                }
+                else if (nbLogements > 1){
+                    int cpt=1;
+                    while(cpt<=nbLogements){
+                        System.out.println("Logement n°" + cpt);
+                        ajoutLogement(logements, reader, nomsLogements);
+                        cpt+=1;
+                    }
+                }
+                else{
+                    System.out.println("Veuillez saisir un entier positif");
                 }
             }
-
+            while(nbLogements<0);
 
             double txBoeuf = -1;
             double txVege = -1;
-            do{    
-                System.out.println("Quelle proportion de vos repas est a base de boeuf ? (en pourcents)");
-                txBoeuf = Integer.parseInt(reader.readLine())/100;
+            do{
+                do{
+                    System.out.println("Quelle proportion de vos repas est a base de boeuf ? (en pourcents)");
+                    txBoeuf = Double.parseDouble(reader.readLine())/100;
+                    if(txBoeuf>1 | txBoeuf<0) System.out.println("Veuillez saisir une valeur entre 0 et 100 inclus");
+                }
+                while(txBoeuf>1 | txBoeuf<0);
 
-                System.out.println("Quelle proportion de vos repas est vegetarienne ? (en pourcents)");
-                txVege = Integer.parseInt(reader.readLine())/100;
-                if(txBoeuf>1 | txBoeuf<0 | txVege>1 | txVege<0 | (txBoeuf+txVege)>1 | (txBoeuf+txVege)<0) {
-                    System.out.println("Veuillez saisir des valeurs comprises entre 0 et 100, dont la somme est également entre 0 et 100.");
+                do{    
+                    System.out.println("Quelle proportion de vos repas est vegetarienne ? (en pourcents)");
+                    txVege = Double.parseDouble(reader.readLine())/100;
+                    if(txVege>1 | txVege<0) System.out.println("Veuillez saisir une valeur entre 0 et 100 inclus");
+                }
+                while(txVege>1 | txVege<0);
+
+                if((txBoeuf+txVege)>1 | (txBoeuf+txVege)<0) {
+                    System.out.println("Veuillez saisir des valeurs dont la somme est entre 0 et 100.");
                 }
             }
-            while(txBoeuf>1 | txBoeuf<0 | txVege>1 | txVege<0 | (txBoeuf+txVege)>1 | (txBoeuf+txVege)<0);
+            while((txBoeuf+txVege)>1 | (txBoeuf+txVege)<0);
             Alimentation alimentation = new Alimentation(txBoeuf,txVege);
 
 
-            double depenses=0;
-            System.out.println("Quelle montant d'argent dépensez vous annuellement dans des biens de consommation?");
-            depenses = Integer.parseInt(reader.readLine());
+            double depenses=-1;
+            do{
+                System.out.println("Quelle montant d'argent dépensez vous annuellement dans des biens de consommation?");
+                depenses = Double.parseDouble(reader.readLine());
+                if (depenses<0) System.out.println("Veuillez saisir une valeur positive ou nulle");
+            }
+            while(depenses<0);
             BienConso bienConso = new BienConso(depenses);
 
             Utilisateur utilisateur = new Utilisateur(alimentation, bienConso, logements, vehicules);
@@ -178,7 +204,7 @@ public class Main {
                 nomsVehicules.put(nouveau.getID(),nom);
             }
             else{
-                System.out.println("Votre entree n'est pas correcte");
+                System.out.println("Veuillez saisir 0 ou 1");
             }
         }
         while(taille != 0 & taille != 1);
@@ -187,8 +213,15 @@ public class Main {
     public static void ajoutLogement(ArrayList<Logement> l, BufferedReader reader, TreeMap<Integer,String> nomsLogements) throws IOException{
         System.out.println("Veuillez saisir un nom pour ce logement.");
         String nom = reader.readLine();
-        System.out.println("Quelle est la superficie, en metre^2, de ce logement ?");
-        int superficie = Integer.parseInt(reader.readLine());
+
+        int superficie = -1;
+        do{
+            System.out.println("Quelle est la superficie, en metre^2, de ce logement ?");
+            superficie = Integer.parseInt(reader.readLine());
+            if (superficie<=0) System.out.println("Veuillez saisir une valeur strictement positive");
+        }
+        while(superficie<=0);
+
         char classe = 'Z';
         do{   
             System.out.println("Veuillez saisir la classe energetique de votre logement, en majuscule.");
@@ -203,7 +236,7 @@ public class Main {
             else if (classe=='F'){nouveau = new Logement(superficie, CE.F);}
             else if (classe=='G'){nouveau = new Logement(superficie, CE.G);}
             else {
-                System.out.println("Votre entree n'est pas correcte");
+                System.out.println("Veuillez saisir une classe energetique entre A et G, en majuscule.");
                 continue;
             }
             l.add(nouveau);
@@ -217,22 +250,30 @@ public class Main {
         try{
             String nomFichier = reader.readLine();         
             try{
+                ArrayList<Transport> vehicules = new ArrayList<Transport>();
+                TreeMap<Integer,String> nomsVehicules = new TreeMap<Integer,String>();
                 BufferedReader readerF = new BufferedReader(new FileReader(nomFichier));
 
                 int nbVehicules = Integer.parseInt(readerF.readLine());
-                ArrayList<Transport> vehicules = new ArrayList<Transport>();
-                TreeMap<Integer,String> nomsVehicules = new TreeMap<Integer,String>();
                 if (nbVehicules == 0){
                     vehicules.add(new Transport());
                 }
                 else if (nbVehicules==1){
                     String[] infoVehicule = readerF.readLine().split(", ");
                     ajoutVehiculeFichier(vehicules, nomsVehicules, infoVehicule);
+                    if(infoVehicule.length!=4){
+                        readerF.close();
+                        throw new ErrFormatFichier("Le nombre de caracteristique du vehicule n'est pas 4");
                     }
+                }
                 else if (nbVehicules>1){
                     int cpt=1;
                     while(cpt<=nbVehicules){
                         String[] infoVehicule = readerF.readLine().split(", ");
+                        if(infoVehicule.length!=4){
+                            readerF.close();
+                            throw new ErrFormatFichier("Le nombre de caracteristique du vehicule n°"+cpt+" n'est pas 4");
+                        }
                         ajoutVehiculeFichier(vehicules, nomsVehicules, infoVehicule);
                         cpt+=1;
                     }
@@ -251,12 +292,20 @@ public class Main {
                 }
                 else if (nbLogements==1){
                     String[] infoLogement = readerF.readLine().split(", ");
+                    if(infoLogement.length!=3){
+                        readerF.close();
+                        throw new ErrFormatFichier("Le nombre de caracteristique du logement n'est pas 3");
+                    }
                     ajoutLogementFichier(logements, nomsLogements, infoLogement);
                 }
                 else if (nbLogements>1){
                     int cpt=1;
                     while(cpt<=nbLogements){
                         String[] infoLogement = readerF.readLine().split(", ");
+                        if(infoLogement.length!=3){
+                            readerF.close();
+                            throw new ErrFormatFichier("Le nombre de caracteristique du logement n°"+cpt+" n'est pas 3");
+                        }
                         ajoutLogementFichier(logements, nomsLogements, infoLogement);
                         cpt+=1;
                     }
@@ -268,8 +317,12 @@ public class Main {
 
 
                 String[] ligne = readerF.readLine().split(", ");
-                double txBoeuf = Integer.parseInt(ligne[0])/100;
-                double txVege = Integer.parseInt(ligne[1])/100;
+                if(ligne.length!=2){
+                    readerF.close();
+                    throw new ErrFormatFichier("Le nombre de taux sur la ligne concernant l'alimentation n'est pas 2");
+                }
+                double txBoeuf = Double.parseDouble(ligne[0])/100;
+                double txVege = Double.parseDouble(ligne[1])/100;
                 if(txBoeuf>1 | txBoeuf<0 | txVege>1 | txVege<0 | (txBoeuf+txVege)>1 | (txBoeuf+txVege)<0){
                     readerF.close();
                     throw new ErrFormatFichier("Les taux de repas ou leur somme ne sont pas entre 0 et 100 inclus.");
@@ -278,7 +331,7 @@ public class Main {
                 Alimentation alimentation = new Alimentation(txBoeuf,txVege);
     
     
-                double depenses = Integer.parseInt(readerF.readLine());
+                double depenses = Double.parseDouble(readerF.readLine());
                 if(depenses<0){
                     readerF.close();
                     throw new ErrFormatFichier("Le montant de depenses en biens de consommation n'est pas positif.");
