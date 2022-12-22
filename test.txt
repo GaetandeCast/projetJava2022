@@ -3,6 +3,6 @@ Tiguan, 6, 10750, grand
 Clio, 11, 950, petit
 2
 Paris, 200, C
-Compagne, 500, F
+Campagne, 500, F
 12, 25
 12550
