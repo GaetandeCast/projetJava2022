@@ -1,8 +1,0 @@
-2
-Tiguan, 6, 10750, grand
-Clio, 11, 950, petit
-2
-Paris, 200, C
-Campagne, 500, F
-12, 25
-12550
