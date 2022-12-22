@@ -151,6 +151,46 @@ public class IO {
             }
 
 
+            //Lecture du nombre de trajet en avion pour chaque longueur de courrier
+            //puis initialisation d'un Avion et ajout a la liste pour chaque longueur dont le nombre de trajet est postive
+            ArrayList<Avion> trajetsAvion = new ArrayList<Avion>();
+            int nbTrajets = -1;
+            while(nbTrajets<0){    
+                System.out.println("Combien de trajets long courrier en avion faites vous par an ?");
+                nbTrajets = Integer.parseInt(reader.readLine());
+                if (nbTrajets>0){
+                    trajetsAvion.add(new Avion(nbTrajets,Longueur.Long));
+                }
+                else if (nbTrajets<0){
+                    System.out.println("Veuillez saisir un entier positif ou nul");
+                }
+            }
+
+            nbTrajets = -1;
+            while(nbTrajets<0){    
+                System.out.println("Combien de trajets moyen courrier en avion faites vous par an ?");
+                nbTrajets = Integer.parseInt(reader.readLine());
+                if (nbTrajets>0){
+                    trajetsAvion.add(new Avion(nbTrajets,Longueur.Moyen));
+                }
+                else if (nbTrajets<0){
+                    System.out.println("Veuillez saisir un entier positif ou nul");
+                }
+            }
+            
+            nbTrajets = -1;
+            while(nbTrajets<0){    
+                System.out.println("Combien de trajets petit courrier en avion faites vous par an ?");
+                nbTrajets = Integer.parseInt(reader.readLine());
+                if (nbTrajets>0){
+                    trajetsAvion.add(new Avion(nbTrajets,Longueur.Petit));
+                }
+                else if (nbTrajets<0){
+                    System.out.println("Veuillez saisir un entier positif ou nul");
+                }
+            }
+
+
             //Lecture des taux de repas a base de boeuf et vegetariens et initialisation d'une instance de la classe Alimentation
             double txBoeuf = -1;
             double txVege = -1;
@@ -185,7 +225,7 @@ public class IO {
             //Initialisation d'une instance de la classe Utilisateur
             //Appel aux fonctions de la classe Utilisateur pour faire un bilan a l'utilisateur de son empreinte carbone
             //et lui faire des recommendations basees sur ce bilan
-            Utilisateur utilisateur = new Utilisateur(alimentation, bienConso, logements, vehicules);
+            Utilisateur utilisateur = new Utilisateur(alimentation, bienConso, logements, vehicules, trajetsAvion);
             System.out.println("---------------------------------------------------------------------------------------");
             utilisateur.detaillerEmpreinte();
             System.out.println("---------------------------------------------------------------------------------------");
@@ -370,6 +410,25 @@ public class IO {
                     throw new ErrFormatFichier("Le nombre de logements incrit n'est pas positif");
                 }
 
+                //Initialisation d'une liste d'Avion et lecture des nombres de trajets pour chaque longueur
+                //puis initialisation d'un Avion et ajout a la liste pour chaque longueur dont le nombre de trajet est postive
+                ArrayList<Avion> trajetsAvion = new ArrayList<Avion>();
+                String[] nbTrajets = readerF.readLine().split(", ");
+                if(nbTrajets.length!=3){
+                    readerF.close();
+                    throw new ErrFormatFichier("Le nombre de trajets sur la ligne concernant les trajets en avion n'est pas 3");
+                }
+                int trajetsLong = Integer.parseInt(nbTrajets[0]);
+                int trajetsMoyen = Integer.parseInt(nbTrajets[1]);
+                int trajetsPetit = Integer.parseInt(nbTrajets[2]);
+                if(trajetsLong < 0 | trajetsMoyen < 0 | trajetsPetit < 0){
+                    readerF.close();
+                    throw new ErrFormatFichier("Un des nombre de trajet en avion n'est pas positif");
+                }
+                if (trajetsLong>0) trajetsAvion.add(new Avion(trajetsLong, Longueur.Long));
+                if (trajetsMoyen>0) trajetsAvion.add(new Avion(trajetsMoyen, Longueur.Moyen));
+                if (trajetsPetit>0) trajetsAvion.add(new Avion(trajetsPetit, Longueur.Petit));
+                
                 //Lecture des taux de repas a base de boeuf et vegetariens et initialisation d'un instance de la classe Alimentation
                 String[] ligne = readerF.readLine().split(", ");
                 if(ligne.length!=2){
@@ -395,7 +454,7 @@ public class IO {
                 //Initialisation d'une instance de la classe Utilisateur
                 //Appel aux fonctions de la classe Utilisateur pour faire un bilan a l'utilisateur de son empreinte carbone
                 //et lui faire des recommendations basees sur ce bilan
-                Utilisateur utilisateur = new Utilisateur(alimentation, bienConso, logements, vehicules);
+                Utilisateur utilisateur = new Utilisateur(alimentation, bienConso, logements, vehicules, trajetsAvion);
                 System.out.println("---------------------------------------------------------------------------------------");
                 utilisateur.detaillerEmpreinte();
                 utilisateur.recommendations(nomsVehicules,nomsLogements);

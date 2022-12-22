@@ -18,6 +18,7 @@ public class Utilisateur {
     private BienConso bienConso;
     private ArrayList<Logement> logements;
     private ArrayList<Transport> vehicules;
+    private ArrayList<Avion> trajetsAvion;
     private ServicesPublics servicesPublics;
 
     //Le constructeur par defaut appelle les constructeurs par defaut des classes de ses attributs
@@ -28,14 +29,17 @@ public class Utilisateur {
         logements.add(new Logement());
         vehicules = new ArrayList<Transport>();
         vehicules.add(new Transport());
+        trajetsAvion = new ArrayList<Avion>();
+        trajetsAvion.add(new Avion());
         servicesPublics = ServicesPublics.getInstance();
     }
 
-    public Utilisateur(Alimentation a, BienConso b, ArrayList<Logement> l, ArrayList<Transport> t){
+    public Utilisateur(Alimentation a, BienConso b, ArrayList<Logement> l, ArrayList<Transport> t, ArrayList<Avion> av){
         alimentation = a;
         bienConso = b;
         logements = l;
         vehicules = t;
+        trajetsAvion = av;
         servicesPublics = ServicesPublics.getInstance();
     }
     
@@ -47,13 +51,15 @@ public class Utilisateur {
      * @param l le poste de consommation relatif au logement
      * @param t le poste de consommation relatif aux transports
      */
-    public Utilisateur(Alimentation a, BienConso b, Logement l, Transport t){
+    public Utilisateur(Alimentation a, BienConso b, Logement l, Transport t, Avion av){
         alimentation = a;
         bienConso = b;
         logements = new ArrayList<Logement>();
         logements.add(l);
         vehicules = new ArrayList<Transport>();
         vehicules.add(t);
+        trajetsAvion = new ArrayList<Avion>();
+        trajetsAvion.add(av);
         servicesPublics = ServicesPublics.getInstance();
     }
 
@@ -62,6 +68,7 @@ public class Utilisateur {
         double empreinte = alimentation.getImpact() + bienConso.getImpact() + servicesPublics.getImpact();
         for (Logement l : logements) empreinte+=l.getImpact();
         for (Transport t : vehicules) empreinte+=t.getImpact();
+        for (Avion av : trajetsAvion) empreinte+=av.getImpact();
         return empreinte;
     }
 
@@ -74,12 +81,15 @@ public class Utilisateur {
         for (Logement l : logements) impactLogements+=l.getImpact();
         double impactVehicules=0;
         for (Transport t : vehicules) impactVehicules+=t.getImpact();
+        double impactAvion=0;
+        for (Avion av : trajetsAvion) impactAvion+=av.getImpact();
 
         System.out.println("Votre empreinte carbone annuelle est de " + calculerEmpreinte()+ " tonnes de CO2 equivalent.\n"
         + alimentation.getImpact() + " TCO2eq vien(nen)t de votre alimentation, " 
         + bienConso.getImpact() + " TCO2eq vien(nen)t de vos consommations diverses, " 
         + impactLogements + " TCO2eq vien(nen)t de votre(vos) logement(s), " 
-        + impactVehicules + " TCO2eq vien(nen)t de votre(vos) vehicule(s) et " 
+        + impactVehicules + " TCO2eq vien(nen)t de votre(vos) vehicule(s), " 
+        + impactAvion + "TCO2eq viennent de vos trajets en avion et "
         + servicesPublics.getImpact() + " TCO2eq viennent des services publics.");
     }
 
@@ -91,7 +101,7 @@ public class Utilisateur {
      * @param nomsLogements TreeMap associant le nom des logements et leur ID
      * @since 1.0
      */
-    public void recommendations(TreeMap<Integer,String> nomsVehicules, TreeMap<Integer,String> nomsLogements){
+   public void recommendations(TreeMap<Integer,String> nomsVehicules, TreeMap<Integer,String> nomsLogements){
         //On ajoute toutes les instances de ConsoCarbone a une ArrayList
         ArrayList<ConsoCarbone> listeconsos = new ArrayList<ConsoCarbone>();
         listeconsos.add(alimentation);
@@ -100,6 +110,7 @@ public class Utilisateur {
 
         for (Logement l : logements) listeconsos.add(l);
         for (Transport t : vehicules) listeconsos.add(t);
+        for (Avion av : trajetsAvion) listeconsos.add(av);
 
         //On trie cette ArrayList pour avoir l'instance de ConsoCarbone avec le plus grand impact au fond de la liste
         Collections.sort(listeconsos);
@@ -120,6 +131,13 @@ public class Utilisateur {
                 Transport t = (Transport) c;
                 if(t.getPossede()) s+="le vehicule " + nomsVehicules.get(t.getID());
                 else s+="les transports";
+            }
+            else if (c instanceof Avion) {
+                Avion av = (Avion) c;
+                if (av.getNbTrajet()>0){
+                    s+="les trajets "+av.getLongueur()+" courrier";
+                }
+                else s+="les trajets en avion";
             }
             else if (c instanceof ServicesPublics) s+="les services publics";
         }
@@ -152,6 +170,9 @@ public class Utilisateur {
             Transport t = (Transport) consoMaxImpact;
             System.out.println("votre vehicule " + nomsVehicules.get(t.getID()) + ", par exemple en l'utilisant moins ou en vous en separant.");
         }
+        else if (consoMaxImpact instanceof Avion){
+            Avion av = (Avion) consoMaxImpact;
+            System.out.println("vos trajets "+av.getLongueur()+" courrier");
+        }
     }
-    
 }
