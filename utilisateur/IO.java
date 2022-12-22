@@ -35,7 +35,6 @@ public class IO {
                     initialisationFichier(reader);
                     if(!retourMenu(reader)) break;
                 }
-                //else if (entree == 3) simulationPolitique(reader);
                 else System.out.println("Veuillez saisir un numero correct.");
             }
             reader.close();
@@ -57,7 +56,6 @@ public class IO {
         System.out.println("Tapez 0 pour sortir du menu.");
         System.out.println("Tapez 1 pour entrer saisir vos informations manuellement.");
         System.out.println("Tapez 2 pour lire vos informations depuis un fichier texte.");
-        System.out.println("Tapez 3 pour simuler des mesures politiques affectant l'empreinte carbone des français.");
         System.out.println("---------------------------------------------------------------------------------------");
     }
 
