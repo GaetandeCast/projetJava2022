@@ -8,7 +8,7 @@ package consocarbone;
     * @version 1.0
 */
 
-public class Avion extends Transport {
+public class Avion extends ConsoCarbone {
     private int nbDeTrajet;
     private Longueur longueurCourrier;
 
