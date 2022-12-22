@@ -5,6 +5,9 @@ import java.util.TreeMap;
 
 import consocarbone.*;
 
+//Les attributs sont des instances des differentes classes filles de la classe ConsoCarbone
+//representant chacun un poste de consommation carbone
+//Pour avoir la possibilite d'avoir plusieur logements et vehicules, on utilise des ArrayList de Logement et Transport
 public class Utilisateur {
     private Alimentation alimentation;
     private BienConso bienConso;
@@ -12,6 +15,7 @@ public class Utilisateur {
     private ArrayList<Transport> vehicules;
     private ServicesPublics servicesPublics;
 
+    //Le constructeur par defaut appelle les constructeurs par defaut des classes de ses attributs
     public Utilisateur(){
         alimentation = new Alimentation();
         bienConso = new BienConso();
@@ -29,6 +33,7 @@ public class Utilisateur {
         vehicules = t;
         servicesPublics = ServicesPublics.getInstance();
     }
+    //Ce constructeur permet de creer un Utilisateur sans creer de liste de Logement et Transport au prealable
     public Utilisateur(Alimentation a, BienConso b, Logement l, Transport t){
         alimentation = a;
         bienConso = b;
@@ -39,6 +44,7 @@ public class Utilisateur {
         servicesPublics = ServicesPublics.getInstance();
     }
 
+    //Renvoi la sommme des impacts respectifs des postes de consommation carbone de l'utilisateur
     public double calculerEmpreinte(){
         double empreinte = alimentation.getImpact() + bienConso.getImpact() + servicesPublics.getImpact();
         for (Logement l : logements) empreinte+=l.getImpact();
@@ -46,7 +52,9 @@ public class Utilisateur {
         return empreinte;
     }
 
+    //Indique la repartition de l'empreinte carbone par type de poste de consommation carbone
     public void detaillerEmpreinte(){
+        //On cumule les impact de tout les logements et vehicules
         double impactLogements=0;
         for (Logement l : logements) impactLogements+=l.getImpact();
         double impactVehicules=0;
@@ -60,7 +68,9 @@ public class Utilisateur {
         + servicesPublics.getImpact() + " TCO2eq viennent des services publics.");
     }
 
+    //Determine l'instance de ConsoCarbone avec le plus grand impact et fait des recommendations pour réduire la valeur de cet impact
     public void recommendations(TreeMap<Integer,String> nomsVehicules, TreeMap<Integer,String> nomsLogements){
+        //On ajoute toutes les instances de ConsoCarbone a une ArrayList
         ArrayList<ConsoCarbone> listeconsos = new ArrayList<ConsoCarbone>();
         listeconsos.add(alimentation);
         listeconsos.add(bienConso);
@@ -69,8 +79,11 @@ public class Utilisateur {
         for (Logement l : logements) listeconsos.add(l);
         for (Transport t : vehicules) listeconsos.add(t);
 
+        //On trie cette ArrayList pour avoir l'instance de ConsoCarbone avec le plus grand impact au fond de la liste
         Collections.sort(listeconsos);
 
+        //On concatene le nom des instance de ConsoCarbone dans l'ordre d'impact 
+        //pour les indiquer dans l'ordre croissant d'impact a l'utilisateur
         String s = "";
         for(ConsoCarbone c : listeconsos){
             if(s!="") s+= ", ";
@@ -90,9 +103,12 @@ public class Utilisateur {
         }
         System.out.println("Dans l'odre croissant d'impact, vos poste des consommation carbone sont : " + s + ".");
 
+        //On determine l'instance de ConsoCarbone avec l'impact le plus eleve
         int longueur = listeconsos.size();
         ConsoCarbone consoMaxImpact = listeconsos.get(longueur-1);
 
+        //On traite a part le cas ou ce sont les services publics 
+        //car l'utilisateur n'a pas d'influence sur ce poste de consommation 
         boolean maxImpactSP=false;
         if (consoMaxImpact instanceof ServicesPublics){
             listeconsos.remove(consoMaxImpact);
@@ -101,6 +117,7 @@ public class Utilisateur {
             maxImpactSP=true;
         }
         
+        //On fait une recommendation personalisee dependant du type du poste de consommation carbone le plus eleve
         if (maxImpactSP) System.out.println("Vous ne pouvez pas réduire l'impact venant des services publics, il vous donc recommende de reduire votre impact carbone venant de ");
         else System.out.print("Afin d'avoir un mode de vie plus durable, il vous est recommende de reduire votre impact carbone venant de ");
         if (consoMaxImpact instanceof Alimentation) System.out.println("votre alimentation, par exemple en diminuant la proportion de repas a base de boeuf et en augmentant celle de repas vegetariens.");
@@ -111,7 +128,7 @@ public class Utilisateur {
         }
         else if (consoMaxImpact instanceof Transport) {
             Transport t = (Transport) consoMaxImpact;
-            System.out.print("votre vehicule " + nomsVehicules.get(t.getID()) + ", par exemple en l'utilisant moins ou en vous en separant.");
+            System.out.println("votre vehicule " + nomsVehicules.get(t.getID()) + ", par exemple en l'utilisant moins ou en vous en separant.");
         }
     }
     

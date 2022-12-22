@@ -1,12 +1,5 @@
 package consocarbone;
 
-/**
-    * <b> Cette classe implémente le poste de consommation carbone relatif aux transports </b>
-    *
-    * @author Gaétan De Castellane, Martin Youssef
-    * @version 1.0
-*/
-
 public class Transport extends ConsoCarbone{
     private boolean possede;
     private Taille taille;
@@ -21,15 +14,6 @@ public class Transport extends ConsoCarbone{
         amortissement = 0;
     }
 
-    /**
-        * le constructeur Transport implémente les différents attributs à une instance de sa classe
-        *
-        * @param possede indique si l'utilisateur possède ou ne possède pas de moyen de transport 
-        * @param taille indique la taille du véhicule, G pour gros et P pour petit
-        * @param kilomAnnee nombre de kilomètre parcourus par an
-        * @param amortissement durée de conservation du véhicule
-        * @since 1.0
-        */
     public Transport(boolean possede, Taille taille, int kilomAnnee, int amortissement){
         super();
         this.possede = possede;
@@ -39,14 +23,6 @@ public class Transport extends ConsoCarbone{
         super.setImpact(this.calculImpact(possede, taille, kilomAnnee, amortissement));
     }
 
-    /**
-        * la méthode carboneMoyen affiche à l'écran l'émission moyenne de CO2 en kg/an vis-à-vis de différents secteurs <br>
-        *<pre>{@code public static void carboneMoyen(){
-        System.out.println("Un français émet en moyenne... }
-        *}</pre>
-        *
-        * @since 1.0 
-    */
     public static void carboneMoyen(){
         System.out.println("Un français émet en moyenne 1972 kg/an de CO2 equivalent en voiture, 480 kg/an en avion, 383 kg/an en fret et messagerie et 85 kg/an en Train et bus.");
     }
@@ -83,33 +59,6 @@ public class Transport extends ConsoCarbone{
         super.setImpact(calculImpact(possede, taille, kilomAnnee, amortissement));
     }
     
-    /**
-     * la méthode calculImpact calcule et retourne l'impact carbone en TCO2eq du logement de l'utilisateur
-     * en faisant une disjonction de cas sur la taille du vehicule en verifiant d'abord que l'utilisateur
-     * possède un vehicule 
-     * <pre>{@code public double calculImpact(boolean possede, Taille taille, int kilomAnnee, int amortissement){
-        if (!possede)
-            return 0;
-        else {
-            switch(taille){
-                case P:
-                    return kilomAnnee*1.93*0.0001 + (4.2/amortissement);
-                case G:
-                    return kilomAnnee*1.93*0.0001 + (19/amortissement);
-                default:
-                    return 0;
-            }
-        }
-    }
-     *}</pre>
-     * 
-     * @param possede indique si l'utilisateur possède ou ne possède pas de moyen de transport 
-     * @param taille indique la taille du véhicule, G pour gros et P pour petit
-     * @param kilomAnnee nombre de kilomètre parcourus par an
-     * @param amortissement durée de conservation du véhicule
-     * @since 1.0
-     * @return l'impact carbone relatif aux transports de l'utilisateur
-     */
     public double calculImpact(boolean possede, Taille taille, int kilomAnnee, int amortissement){
         if (!possede)
             return 0;
@@ -125,9 +74,6 @@ public class Transport extends ConsoCarbone{
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString(){
         if (!possede)
