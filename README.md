@@ -47,6 +47,18 @@ Commande à taper en cas d'erreur non traitée pouvant survenir
 0 #fais quitter le programme
 ```
 
+Format du fichier à fournir (voir le fichier test.txt pour un exemple)
+
+nombre de vehicules
+(nom vehicule, age, distance, taille (petit/grand)) x nbVehicule (sur une ligne differente à chaque fois)
+nombres de logements
+(nom logement, surface, classe) x nbLogement (sur une ligne differente à chaque fois)
+nombre de vols long courrier, nombre de vols moyen courrier, nombre de vols petit courrier
+taux de repas à base de boeuf en %, taux de repas vegetariens en %
+montant des dépenses anuelle en bien de consommation
+
+
+
 ## Auteurs 
 
 Gaétan De castellane
