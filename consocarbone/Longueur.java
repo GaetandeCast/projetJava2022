@@ -1,5 +1,5 @@
 package consocarbone;
 
 public enum Longueur{
-    Long,Court
+    Long, Moyen, Petit
 }
