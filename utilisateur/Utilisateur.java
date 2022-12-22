@@ -5,9 +5,14 @@ import java.util.TreeMap;
 
 import consocarbone.*;
 
-//Les attributs sont des instances des differentes classes filles de la classe ConsoCarbone
-//representant chacun un poste de consommation carbone
-//Pour avoir la possibilite d'avoir plusieur logements et vehicules, on utilise des ArrayList de Logement et Transport
+/**
+ * Les attributs sont des instances des differentes classes filles de la classe ConsoCarbone
+ * representant chacun un poste de consommation carbone pour l'utilisateur
+ * Pour avoir la possibilite d'avoir plusieur logements et vehicules, on utilise des ArrayList de Logement et Transport
+ * 
+ * @author Gaétan De Castellane, Martin Youssef
+ * @since 1.0
+*/
 public class Utilisateur {
     private Alimentation alimentation;
     private BienConso bienConso;
@@ -33,7 +38,15 @@ public class Utilisateur {
         vehicules = t;
         servicesPublics = ServicesPublics.getInstance();
     }
-    //Ce constructeur permet de creer un Utilisateur sans creer de liste de Logement et Transport au prealable
+    
+    /**
+     * Ce constructeur permet de creer un Utilisateur sans creer de liste de Logement et Transport au prealable
+     * 
+     * @param a le poste de consommation relatif a l'alimentation
+     * @param b le poste de consommation relatif aux biens de consommation
+     * @param l le poste de consommation relatif au logement
+     * @param t le poste de consommation relatif aux transports
+     */
     public Utilisateur(Alimentation a, BienConso b, Logement l, Transport t){
         alimentation = a;
         bienConso = b;
@@ -52,7 +65,9 @@ public class Utilisateur {
         return empreinte;
     }
 
-    //Indique la repartition de l'empreinte carbone par type de poste de consommation carbone
+    /**
+     * Indique, en l'affichant, la repartition de l'empreinte carbone par type de poste de consommation carbone
+     */
     public void detaillerEmpreinte(){
         //On cumule les impact de tout les logements et vehicules
         double impactLogements=0;
@@ -68,7 +83,14 @@ public class Utilisateur {
         + servicesPublics.getImpact() + " TCO2eq viennent des services publics.");
     }
 
-    //Determine l'instance de ConsoCarbone avec le plus grand impact et fait des recommendations pour réduire la valeur de cet impact
+    /**
+     * Determine l'instance de ConsoCarbone avec le plus grand impact 
+     * et fait des recommendations pour réduire la valeur de cet impact
+     * 
+     * @param nomsVehicules TreeMap associant le nom des véhicules et leur ID
+     * @param nomsLogements TreeMap associant le nom des logements et leur ID
+     * @since 1.0
+     */
     public void recommendations(TreeMap<Integer,String> nomsVehicules, TreeMap<Integer,String> nomsLogements){
         //On ajoute toutes les instances de ConsoCarbone a une ArrayList
         ArrayList<ConsoCarbone> listeconsos = new ArrayList<ConsoCarbone>();

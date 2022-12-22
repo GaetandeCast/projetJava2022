@@ -9,6 +9,15 @@ import java.util.TreeMap;
 
 import consocarbone.*;
 
+/**
+ * Classe main exécutant le programme
+ * 
+ * @author Gaétan De Castellane, Martin Youssef
+ * @version 1.0
+ * @exception IOException
+ * @exception ErrFormatFichier
+ */
+
 public class Main {
     public static void main(String[] args) {
         run();
@@ -125,6 +134,7 @@ public class Main {
 
             double txBoeuf = -1;
             double txVege = -1;
+            // gère de manière interactive l'exception taux non compris entre 0 et 1
             do{
                 do{
                     System.out.println("Quelle proportion de vos repas est a base de boeuf ? (en pourcents)");
