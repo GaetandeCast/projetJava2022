@@ -4,5 +4,6 @@ Clio, 11, 950, petit
 2
 Paris, 200, C
 Campagne, 500, F
+0, 2, 2
 12, 25
 12550
