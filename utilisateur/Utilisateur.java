@@ -172,7 +172,7 @@ public class Utilisateur {
         }
         else if (consoMaxImpact instanceof Avion){
             Avion av = (Avion) consoMaxImpact;
-            System.out.println("vos trajets "+av.getLongueur()+" courrier");
+            System.out.println("vos trajets "+av.getLongueur()+" courrier, en empruntant moins l'avion.");
         }
     }
 }
