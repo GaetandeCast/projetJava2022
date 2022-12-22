@@ -88,6 +88,19 @@ public class Avion extends Transport {
         }
     }
 
+    public int getNbTrajet(){
+        return nbDeTrajet;
+    }
+    public void setNbTrajet(int n){
+        nbDeTrajet = n;
+    }
+    public Longueur getLongueur(){
+        return longueurCourrier;
+    }
+    public void setLongueur(Longueur l){
+        longueurCourrier = l;
+    }
+    
     /**
         * {@inheritDoc}
     */
