@@ -1,6 +1,6 @@
 # Projet Empreinte Carbone
 
-Ce projet a pour but de recommander de manière simplifiée à l'utilisateur une manière de réduire son empreinte carbone en analysant son impact vis-à-vis de différents postes de consommation comme le logement, les transports ou encore l'alimenttion.
+Ce projet a pour but de recommander de manière simplifiée à l'utilisateur une manière de réduire son empreinte carbone en analysant son impact vis-à-vis de différents postes de consommation comme le logement, les transports ou encore l'alimentation.
 
 ## Description
 
