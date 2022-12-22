@@ -1,16 +1,22 @@
 # Projet Empreinte Carbone
 
-Ce projet a pour but de recommander de manière simplifiée à l'utilisateur une manière de réduire son empreinte carbone en analysant son impact vis-à-vis de différents postes de consommation comme le logement, les transports ou encore l'alimenttion.
+Ce projet a pour but de recommander de manière simplifiée à l'utilisateur une manière de réduire son empreinte carbone en analysant son impact vis-à-vis de différents postes de consommation comme le logement, les transports ou encore l'alimentation.
 
 ## Description
 
-Ce projet Java contient deux packages
+Ce projet Java contient deux packages :
 * consocarbone
 * utilisateur
 
-le package consocarbone contient les classes relatives aux postes de consommation carbone :
-* la classe mère consoCarbone
-* la classe Logement qui utilise l'enumération CE (pour Classe Énergétique) contenu dans le package
+le package consocarbone contient la classe mère ConsoCarbone et ses classes filles relatives aux postes de consommation carbone
+
+le package utilisateur contient la classe Utilisateur qui importe le package consocarbone, la classe IO et une Exception Fichier
+
+La classe Utilisateur fournit la fiche de consommation carbone de l'utilisateur et les méthodes de recommendation
+
+La classe IO implémente un menu interactif
+
+On pourra se placer dans le dossier du projet pour exécuter le programme.
 
 ## Pour commencer
 
@@ -20,14 +26,18 @@ le package consocarbone contient les classes relatives aux postes de consommatio
 
 ### Installation
 
-* How/where to download your program
-* Any modifications needed to be made to files/folders
+* télécharger le dossier ProjetJava contenant les packages et la classe Main
 
-### exécuter le programme
+### compiler et exécuter le programme
+* une fois dans le dossier contenant les packages et la classe Main
 
-* How to run the program
+* compiler avec
 ```
-code blocks for commands
+javac Main.class
+```
+* exécuter avec
+```
+java Main
 ```
 
 ## Aide
@@ -37,9 +47,7 @@ Commande à taper en cas d'erreur non traitée pouvant survenir
 0 #fais quitter le programme
 ```
 
-## Auteurs
-
-Noms des contributeurs : 
+## Auteurs 
 
 Gaétan De castellane
 
