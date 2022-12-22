@@ -49,7 +49,7 @@ Commande à taper en cas d'erreur non traitée pouvant survenir
 
 Format du fichier à fournir (voir le fichier test.txt pour un exemple)
 
-<br>nombre de vehicules<br>
+<br>nombre de vehicules
 <br>(nom vehicule, age, distance, taille (petit/grand)) x nbVehicule (sur une ligne differente à chaque fois)<br>
 <br>nombres de logements<br>
 <br>(nom logement, surface, classe) x nbLogement (sur une ligne differente à chaque fois)<br>
