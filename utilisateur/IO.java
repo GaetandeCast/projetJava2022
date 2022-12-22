@@ -11,7 +11,12 @@ import consocarbone.*;
 
 public class IO {
 
-    //Gère les interactions globales avec l'utilisateur, depuis le terminal
+    /**
+     * Gère les interactions globales avec l'utilisateur, depuis le terminal
+     * 
+     * @exception NumberFormatException
+     * @exception IOException
+    */
     public static void run(){
         try{    
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
